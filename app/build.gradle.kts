@@ -3,6 +3,7 @@ plugins {
     id("application")
     id("checkstyle")
     jacoco
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "hexlet.code"

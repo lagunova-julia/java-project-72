@@ -15,8 +15,13 @@ public class App {
         return app;
     }
 
+    public static int getPort() {
+        String port = System.getenv().getOrDefault("PORT", "7070");
+        return Integer.valueOf(port);
+    }
+
     public static void main(String[] args) {
         Javalin app = getApp();
-        app.start(5432);
+        app.start(getPort());
     }
 }
