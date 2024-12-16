@@ -20,8 +20,26 @@ public class App {
         return Integer.valueOf(port);
     }
 
+    public static void createDatabase(Javalin app) {
+        // Конфигурация базы данных
+        DatabaseConfig dbConfig = new DatabaseConfig();
+
+        // Пример использования DataSource
+//        app.get("/", ctx -> {
+//            try (var conn = dbConfig.getDataSource().getConnection()) {
+//                ctx.result("Database connection is successful!");
+//            } catch (Exception e) {
+//                ctx.result("Database connection failed: " + e.getMessage());
+//            }
+//        });
+    }
+
     public static void main(String[] args) {
         Javalin app = getApp();
         app.start(getPort());
+
+        createDatabase(app);
+
+
     }
 }
