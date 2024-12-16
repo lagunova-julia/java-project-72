@@ -23,6 +23,7 @@ public class App {
     public static void createDatabase(Javalin app) {
         // Конфигурация базы данных
         DatabaseConfig dbConfig = new DatabaseConfig();
+        dbConfig.initializeDatabase();
 
         // Пример использования DataSource
 //        app.get("/", ctx -> {
@@ -39,7 +40,5 @@ public class App {
         app.start(getPort());
 
         createDatabase(app);
-
-
     }
 }
