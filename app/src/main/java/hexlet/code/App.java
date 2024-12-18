@@ -1,5 +1,8 @@
 package hexlet.code;
 
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -8,10 +11,12 @@ public class App {
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             //config.fileRenderer(new JavalinJte());
+            config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
-        app.get("/", ctx -> ctx.result("Hello World"));
-
+        app.get("/", ctx -> {
+            ctx.render("index.jte");
+        });
         return app;
     }
 
@@ -25,14 +30,21 @@ public class App {
         DatabaseConfig dbConfig = new DatabaseConfig();
         dbConfig.initializeDatabase();
 
-        // Пример использования DataSource
-//        app.get("/", ctx -> {
+        // Пример использования DataSource и проверка подключения БД h2
+//        app.get("/db", ctx -> {
 //            try (var conn = dbConfig.getDataSource().getConnection()) {
 //                ctx.result("Database connection is successful!");
 //            } catch (Exception e) {
 //                ctx.result("Database connection failed: " + e.getMessage());
 //            }
 //        });
+    }
+
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        return templateEngine;
     }
 
     public static void main(String[] args) {

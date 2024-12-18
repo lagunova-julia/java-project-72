@@ -20,9 +20,7 @@ public class DatabaseConfig {
 
         dataSource = new HikariDataSource(hikariConfig);
     }
-
-
-
+    
     public DataSource getDataSource() {
         return dataSource;
     }
