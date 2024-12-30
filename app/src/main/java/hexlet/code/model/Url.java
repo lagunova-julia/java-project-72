@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.model;
 
 import lombok.Getter;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public class Url {
 
     public Url(String name) {
         this.name = name;
-        this.createdAt = LocalDateTime.now(); // Устанавливаем текущее время при создании
+        this.createdAt = LocalDateTime.now();
     }
     public void setId(Long id) {
         this.id = id;
