@@ -3,7 +3,7 @@ package hexlet.code.model;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
-@Getter
+
 public class Url {
     private Long id;
     private String name;
@@ -15,5 +15,17 @@ public class Url {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

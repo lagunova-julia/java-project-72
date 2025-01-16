@@ -1,35 +1,9 @@
-@import gg.jte.Content
-@param Content footer = null
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Page Analizer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-          crossorigin="anonymous">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-@if (footer != null)
-    <footer class="text-center text-lg-start bg-light text-muted">
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-            ${footer}
-        </div>
-    </footer>
-@endif
-
-</body>
-</html>
+@template.layout.page(
+content = @`
+    <h1>Анализатор страниц</h1>
+    <form action="/urls" method="post">
+        <input type='text' name='url' placeholder='Введите URL' required/>
+        <button type='submit'>Отправить</button>
+    </form>
+`
+)
