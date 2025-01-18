@@ -5,7 +5,7 @@ public final class JteindexGenerated {
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor) {
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
-				jteOutput.writeContent("\r\n    <h1>Анализатор страниц</h1>\r\n    <form action=\"/urls\" method=\"post\">\r\n        <input type='text' name='url' placeholder='Введите URL' required/>\r\n        <button type='submit'>Отправить</button>\r\n    </form>\r\n");
+				jteOutput.writeContent("\r\n    <h1 class=\"text-center\">Анализатор страниц</h1>\r\n    <form class=\"text-center\" action=\"/urls\" method=\"post\">\r\n        <input type='text' class=\"custom-input\" name='url' placeholder='Введите URL' required/>\r\n        <button class=\"custom-button\" type='submit'>Отправить</button>\r\n    </form>\r\n");
 			}
 		}, null, null);
 		jteOutput.writeContent("\r\n");

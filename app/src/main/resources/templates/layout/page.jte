@@ -9,16 +9,50 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Анализатор страниц</title>
+        <title >Анализатор страниц</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
               rel="stylesheet"
               integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
               crossorigin="anonymous">
+        <style>
+            body {
+<%--                background-color: #ffcccb; /* Нежно-розово-персиковый цвет */--%>
+                background-image: url(https://sun9-25.userapi.com/gWvjVnlKuOwzh06LbNAMa6pnxxt5llCIUuH-VA/5U2gECNBzOA.jpg);
+                background-size: auto;
+                background-repeat: no-repeat;
+            }
+            .custom-button {
+                background-color: #e599b2; /* Розовый цвет */
+                color: white; /* Цвет текста */
+                border: none; /* Убираем границу */
+                padding: 10px 20px; /* Добавляем отступы */
+                border-radius: 5px; /* Закругляем углы */
+                font-size: 16px; /* Изменяем размер шрифта */
+            }
+            .custom-button:hover {
+                background-color: #db7093; /* Цвет при наведении */
+                box-shadow: 0 0 5px #e599b2; /* Тень при фокусировке */
+            }
+            .custom-input {
+                border: 2px solid #e599b2; /* Цвет рамки */
+                border-radius: 5px; /* Закругление углов */
+                padding: 10px; /* Внутренний отступ */
+                transition: border-color 0.3s; /* Плавный переход */
+            }
+            .custom-input:focus {
+                border-color: #007BFF; /* Цвет рамки при фокусировке */
+                box-shadow: 0 0 5px #e599b2; /* Тень при фокусировке */
+                outline: none; /* Убирает стандартное выделение */
+            }
+            .custom-input:hover {
+                border-color: #ff69b4; /* Цвет рамки при наведении */
+            }
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Главная</a>
                     </li>

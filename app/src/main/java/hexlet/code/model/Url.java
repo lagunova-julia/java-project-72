@@ -3,7 +3,6 @@ package hexlet.code.model;
 import lombok.Getter;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 
 public class Url {
