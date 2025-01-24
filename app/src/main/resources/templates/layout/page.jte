@@ -16,13 +16,13 @@
               crossorigin="anonymous">
         <style>
             body {
-<%--                background-color: #ffcccb; /* Нежно-розово-персиковый цвет */--%>
-                background-image: url(https://kartinki.pics/uploads/posts/2021-07/1627130837_8-kartinkin-com-p-nezhno-rozovie-blestki-fon-krasivo-9.jpg);
-                background-size: 100%;
-                background-repeat: no-repeat;
-                background-position: center; /* Центрировать изображение */
-                height: 100vh; /* Устанавливаем высоту body на 100% от высоты окна */
-                margin: 0; /* Убираем отступы */
+                background-color: #ffcccb; /* Нежно-розово-персиковый цвет */
+<%--                background-image: url(https://kartinki.pics/uploads/posts/2021-07/1627130837_8-kartinkin-com-p-nezhno-rozovie-blestki-fon-krasivo-9.jpg);--%>
+<%--                background-size: 100%;--%>
+<%--                background-repeat: no-repeat;--%>
+<%--                background-position: center; /* Центрировать изображение */--%>
+<%--                height: 100vh; /* Устанавливаем высоту body на 100% от высоты окна */--%>
+<%--                margin: 0; /* Убираем отступы */--%>
             }
             .custom-button {
                 background-color: #e599b2; /* Розовый цвет */
