@@ -1,4 +1,6 @@
 @import hexlet.code.dto.urls.UrlPage
+@import java.time.ZoneId
+@import java.time.ZonedDateTime
 @import java.time.format.DateTimeFormatter
 @param UrlPage page
 
@@ -20,7 +22,8 @@ content = @`
             </tr>
             <tr>
                 <td>Дата создания</td>
-                <td>${page.getUrl().getCreatedAt().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))}</td>
+                <td>${ZonedDateTime.of(page.getUrl().getCreatedAt().toLocalDateTime(), ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))}</td>
             </tr>
     </table>
 `,

@@ -1,9 +1,11 @@
 package gg.jte.generated.ondemand.urls;
 import hexlet.code.dto.urls.UrlPage;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 public final class JteshowGenerated {
 	public static final String JTE_NAME = "urls/show.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,4,4,7,7,9,9,9,15,15,15,19,19,19,23,23,23,26,26,26,27,27,27,2,2,2,2};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,3,4,4,4,6,6,9,9,11,11,11,17,17,17,21,21,21,25,26,26,26,29,29,29,30,30,30,4,4,4,4};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, UrlPage page) {
 		jteOutput.writeContent("\r\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
@@ -19,7 +21,8 @@ public final class JteshowGenerated {
 				jteOutput.writeUserContent(page.getUrl().getName());
 				jteOutput.writeContent("</td>\r\n            </tr>\r\n            <tr>\r\n                <td>Дата создания</td>\r\n                <td>");
 				jteOutput.setContext("td", null);
-				jteOutput.writeUserContent(page.getUrl().getCreatedAt().toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+				jteOutput.writeUserContent(ZonedDateTime.of(page.getUrl().getCreatedAt().toLocalDateTime(), ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 				jteOutput.writeContent("</td>\r\n            </tr>\r\n    </table>\r\n");
 			}
 		}, null, null);
