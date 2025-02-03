@@ -25,7 +25,7 @@ public class ControllerTest {
     public void testMainPage() {
         JavalinTest.test(app, (server, client) -> {
             var response = client.get(NamedRoutes.rootPath());
-            assertEquals(response.code(), 200);
+            assertEquals(200, response.code());
             assertThat(response.body().string()).contains("Анализатор страниц");
         });
     }
@@ -34,7 +34,7 @@ public class ControllerTest {
     public void testUrlsPage() {
         JavalinTest.test(app, (server, client) -> {
             var response = client.get(NamedRoutes.urlsPath());
-            assertEquals(response.code(), 200);
+            assertEquals(200, response.code());
         });
     }
 
@@ -43,17 +43,17 @@ public class ControllerTest {
         var url = new Url("https://some-domain.org");
         UrlRepository.save(url);
         JavalinTest.test(app, (server, client) -> {
-            var response = client.get(NamedRoutes.urlsPath() + url.getId());
-            assertThat(response.code()).isEqualTo(200);
+            var response = client.get(NamedRoutes.urlsPath() + "/" + url.getId());
+            assertEquals(200, response.code());
         });
     }
 
     @Test
     public void testCreateUrl() {
         JavalinTest.test(app, (server, client) -> {
-            var requestBody = "url=https://some-domain.org:8080/example/path";
+            var requestBody = "name=https://some-domain.org:8080/example/path";
             var response = client.post(NamedRoutes.urlsPath(), requestBody);
-            assertThat(response.code()).isEqualTo(200);
+            assertEquals(200, response.code());
             assertThat(response.body().string()).contains("https://some-domain.org:8080");
         });
     }
