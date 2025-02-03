@@ -5,7 +5,7 @@
 @param UrlPage page
 
 @template.layout.page(
-
+page = page,
 content = @`
     <div class="mb-3">
         <h1>Сайт: ${page.getUrl().getName()}</h1>

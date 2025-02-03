@@ -3,7 +3,8 @@
 @param UrlsPage page
 
 @template.layout.page(
-content = @`
+    page = page,
+    content = @`
     <h1>Все сайты</h1>
 
     <table class="table table-striped">

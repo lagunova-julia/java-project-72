@@ -25,7 +25,7 @@ public final class JteshowGenerated {
                         .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 				jteOutput.writeContent("</td>\r\n            </tr>\r\n    </table>\r\n");
 			}
-		}, null, null);
+		}, page, null);
 		jteOutput.writeContent("\r\n");
 	}
 	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {

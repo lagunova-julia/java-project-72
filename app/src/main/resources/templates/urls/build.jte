@@ -2,7 +2,7 @@
 @param BuildUrlPage page
 
 @template.layout.page(
-
+    page = page,
     content = @`
         @if(page.getErrors() != null)
             <div class="mb-3">

@@ -17,12 +17,6 @@ import java.net.URI;
 import java.util.Optional;
 
 public class Controller {
-//    public static void build(Context ctx) {
-//        var page = new BuildUrlPage();
-//        ctx.render("urls/build.jte", model("page", page));
-//    }
-
-    // BEGIN
     public static void create(Context ctx) throws Exception {
         try {
             String inputUrl = ctx.formParamAsClass("url", String.class)

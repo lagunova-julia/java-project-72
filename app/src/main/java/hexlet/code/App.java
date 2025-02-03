@@ -38,13 +38,9 @@ public class App {
 
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
-            //config.fileRenderer(new JavalinJte());
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
-//        app.get("/", ctx -> {
-//            ctx.render("index.jte");
-//        });
         return app;
     }
 
@@ -52,21 +48,6 @@ public class App {
         String port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.valueOf(port);
     }
-
-//    public static void createDatabase(Javalin app) {
-//        // Конфигурация базы данных
-//        DatabaseConfig dbConfig = new DatabaseConfig();
-//        dbConfig.initializeDatabase();
-//
-//        // Пример использования DataSource и проверка подключения БД h2
-////        app.get("/db", ctx -> {
-////            try (var conn = dbConfig.getDataSource().getConnection()) {
-////                ctx.result("Database connection is successful!");
-////            } catch (Exception e) {
-////                ctx.result("Database connection failed: " + e.getMessage());
-////            }
-////        });
-//    }
 
     private static TemplateEngine createTemplateEngine() {
         ClassLoader classLoader = App.class.getClassLoader();
@@ -79,10 +60,7 @@ public class App {
         Javalin app = getApp();
         app.start(getPort());
 
-//        createDatabase(app);
-
         app.get(NamedRoutes.rootPath(), RootController::index);
-//        app.get(NamedRoutes.rootPath(), Controller::build);
         app.post(NamedRoutes.urlsPath(), Controller::create);
         app.get(NamedRoutes.urlsPath(), Controller::index);
         app.get(NamedRoutes.urlPath("{id}"), Controller::show);

@@ -3,7 +3,7 @@ import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.util.NamedRoutes;
 public final class JteindexGenerated {
 	public static final String JTE_NAME = "urls/index.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,4,4,6,6,10,10,13,13,13,16,16,16,16,16,16,16,16,16,16,16,16,19,19,21,21,21,22,22,22,2,2,2,2};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,4,4,7,7,11,11,14,14,14,17,17,17,17,17,17,17,17,17,17,17,17,20,20,22,22,22,23,23,23,2,2,2,2};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, UrlsPage page) {
 		jteOutput.writeContent("\r\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
@@ -29,7 +29,7 @@ public final class JteindexGenerated {
 				}
 				jteOutput.writeContent("\r\n    </table>\r\n");
 			}
-		}, null, null);
+		}, page, null);
 		jteOutput.writeContent("\r\n");
 	}
 	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {
