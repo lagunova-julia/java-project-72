@@ -5,28 +5,60 @@ import hexlet.code.repository.UrlRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
+import okhttp3.mockwebserver.MockWebServer;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ControllerTest {
+public class AppTest {
 
     private static Javalin app;
+    public static MockWebServer server;
 
-    @BeforeEach
-    public final void setUp() throws Exception {
+    @BeforeAll
+    static void setUp() throws Exception {
+        server = new MockWebServer();
+        server.start(8080);
         app = App.getApp();
+    }
+
+    @AfterAll
+    static void tearDown() throws IOException {
+        server.shutdown();
+    }
+
+    @AfterEach
+    void testDown() {
+        app.stop();
     }
 
     @Test
     public void testMainPage() {
         JavalinTest.test(app, (server, client) -> {
-            var response = client.get(NamedRoutes.rootPath());
+            var response = client.get("/");
             assertEquals(200, response.code());
             assertThat(response.body().string()).contains("Анализатор страниц");
+        });
+    }
+
+    @Test
+    void testShow() throws SQLException {
+        var url = new Url("http://test.io");
+        UrlRepository.save(url);
+        JavalinTest.test(app, (server, client) -> {
+            var responce = client.get("/urls/" + url.getId());
+            assertThat(responce.code()).isEqualTo(200);
         });
     }
 
