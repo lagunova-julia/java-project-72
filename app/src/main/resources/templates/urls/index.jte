@@ -11,28 +11,31 @@
     <h1>Все сайты</h1>
 
     <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Имя</td>
+            <td>Последняя проверка</td>
+            <td>Код ответа</td>
+        </tr>
+        </thead>
+        <tbody>
         @for(var url : page.getUrls())
             <tr>
-                <tr>
-                    <td>ID</td>
-                    <td>${url.getId()}</td>
-                </tr>
-                <tr>
-                    <td>Имя</td>
-                    <td><a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a></td>
-                </tr>
-                <tr>
-                    <td>Последняя проверка</td>
+                <td>${url.getId()}</td>
+                <td><a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a></td>
+                @if (page.getLastChecks().get(url.getId()) != null)
                     <td>${ZonedDateTime.of(page.getLastChecks().get(url.getId()).getCreatedAt()
                                 .toLocalDateTime(), ZoneId.systemDefault())
                                 .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))}</td>
-                </tr>
-                <tr>
-                    <td>Код ответа</td>
                     <td>${page.getLastChecks().get(url.getId()).getStatusCode()}</td>
-                </tr>
+                @else
+                    <td></td>
+                    <td></td>
+                @endif
             </tr>
         @endfor
+        </tbody>
     </table>
 `,
 )

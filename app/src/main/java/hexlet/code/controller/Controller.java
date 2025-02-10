@@ -75,6 +75,8 @@ public class Controller {
                 .orElseThrow(() -> new NotFoundResponse("Url with id = " + id + " not found"));
         var urlChecks = UrlCheckRepository.findAllChecks(id);
         var page = new UrlPage(url, urlChecks);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("urls/show.jte", model("page", page));
     }
 

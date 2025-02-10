@@ -13,10 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +27,10 @@ public class AppTest {
     static void setUp() throws Exception {
         server = new MockWebServer();
         server.start(8080);
+    }
+
+    @BeforeEach
+    void appStart() throws Exception {
         app = App.getApp();
     }
 

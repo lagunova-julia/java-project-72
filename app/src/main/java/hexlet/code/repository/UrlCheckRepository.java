@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        String sql = "INSERT INTO urls_check (url_id, status_code, h1, title, description, created_at) " +
+        String sql = "INSERT INTO url_checks (url_id, status_code, h1, title, description, created_at) " +
                 "VALUES (?,?,?,?,?,?)";
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -34,7 +34,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findAllChecks(Long urlId) throws SQLException {
-        var sql = "SELECT * FROM urls_check WHERE url_id = ?";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, urlId);
@@ -57,7 +57,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static Map<Long, UrlCheck> findAllLastChecks() throws SQLException{
-        var sql = "SELECT DISTINCT ON (url_id) * FROM urls_check ORDER BY id DESC";
+        var sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY id DESC";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             var resultSet = stmt.executeQuery();
