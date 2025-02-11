@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class App {
     public static Javalin getApp() throws Exception {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1;");
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;LOCK_TIMEOUT=10000;LOCK_MODE=0");
 
         var dataSource = new HikariDataSource(hikariConfig);
 

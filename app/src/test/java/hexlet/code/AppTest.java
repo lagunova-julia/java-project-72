@@ -23,24 +23,16 @@ public class AppTest {
     private static Javalin app;
     public static MockWebServer server;
 
-    @BeforeAll
-    static void setUp() throws Exception {
-        server = new MockWebServer();
-        server.start(8080);
-    }
-
     @BeforeEach
     void appStart() throws Exception {
+        server = new MockWebServer();
+        server.start(8080);
         app = App.getApp();
     }
 
-    @AfterAll
-    static void tearDown() throws IOException {
-        server.shutdown();
-    }
-
     @AfterEach
-    void testDown() {
+    void testDown() throws IOException {
+        server.shutdown();
         app.stop();
     }
 
