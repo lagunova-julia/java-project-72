@@ -100,8 +100,6 @@ public class Controller {
         String description = doc.select("meta[name=description]").attr("content");
 
         var urlCheck = new UrlCheck(statusCode, title, h1, description, urlId);
-//        urlCheck.setUrlId();
-//        urlCheck.setCreatedAt();
         UrlCheckRepository.save(urlCheck);
         ctx.sessionAttribute("flash", "Page has verified successfully!");
         ctx.sessionAttribute("flash-type", "success");

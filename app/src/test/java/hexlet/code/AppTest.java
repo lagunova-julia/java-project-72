@@ -96,7 +96,7 @@ public class AppTest {
     @Test
     public void testCreateUrl() {
         JavalinTest.test(app, (server, client) -> {
-            var requestBody = "name=https://ru.hexlet.io";
+            var requestBody = "url=https://ru.hexlet.io";
             var response = client.post(NamedRoutes.urlsPath(), requestBody);
             assertEquals(200, response.code());
             assertThat(response.body().string()).contains("https://ru.hexlet.io");
