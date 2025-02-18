@@ -41,19 +41,19 @@ public class Controller {
 
             Optional<Url> existingUrl = UrlRepository.findByName(preparedUrl);
             if (existingUrl.isPresent()) {
-                ctx.sessionAttribute("flash", "Страница уже существует");
+                ctx.sessionAttribute("flash", "Page is already exist");
                 ctx.sessionAttribute("flash-type", "error");
                 ctx.redirect(NamedRoutes.urlsPath());
                 return;
             }
 
             UrlRepository.save(preparedUrl);
-            ctx.sessionAttribute("flash", "Страница успешно добавлена!");
+            ctx.sessionAttribute("flash", "Page is added successfully!");
             ctx.sessionAttribute("flash-type", "success");
             ctx.redirect(NamedRoutes.urlsPath());
         } catch (ValidationException e) {
             var inputUrl = ctx.formParam("url");
-            ctx.sessionAttribute("flash", "Некорректный URL");
+            ctx.sessionAttribute("flash", "Incorrect URL");
             ctx.sessionAttribute("flash-type", "error");
             var page = new BuildUrlPage(inputUrl, e.getErrors());
             ctx.render("urls/build.jte", model("page", page)).status(422);
@@ -81,23 +81,30 @@ public class Controller {
     }
 
     public static void checkAndSave(Context ctx) throws SQLException {
-        var id = ctx.pathParamAsClass("id", Long.class).get();
-        String url = UrlRepository.find(id).toString();
+        var urlId = ctx.pathParamAsClass("id", Long.class).get();
+        Optional<Url> url = UrlRepository.find(urlId);
+        String urlActual = null;
+        if (url.isPresent()) {
+            urlActual = url.get().getName();
+        }
 
-        HttpResponse<JsonNode> jsonResponse = Unirest.get(url).asJson();
+
+        HttpResponse<JsonNode> jsonResponse = Unirest.get(urlActual).asJson();
         int statusCode = jsonResponse.getStatus();
 
-        HttpResponse<String> response = Unirest.get(url).asString();
+        HttpResponse<String> response = Unirest.get(urlActual).asString();
         String body = response.getBody();
         Document doc = Jsoup.parse(body);
         String title = doc.title();
         String h1 = doc.select("h1").text();
         String description = doc.select("meta[name=description]").attr("content");
 
-        var urlCheck = new UrlCheck(id, statusCode, title, h1, description);
+        var urlCheck = new UrlCheck(statusCode, title, h1, description, urlId);
+//        urlCheck.setUrlId();
+//        urlCheck.setCreatedAt();
         UrlCheckRepository.save(urlCheck);
-        ctx.sessionAttribute("flash", "Страница успешно проверена!");
+        ctx.sessionAttribute("flash", "Page has verified successfully!");
         ctx.sessionAttribute("flash-type", "success");
-        ctx.redirect(NamedRoutes.urlPath(id));
+        ctx.redirect(NamedRoutes.urlPath(urlId));
     }
 }

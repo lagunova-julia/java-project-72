@@ -1,4 +1,5 @@
 @import hexlet.code.dto.urls.UrlPage
+@import hexlet.code.util.NamedRoutes
 @import java.time.ZoneId
 @import java.time.ZonedDateTime
 @import java.time.format.DateTimeFormatter
@@ -28,7 +29,7 @@ content = @`
     </table>
 
     <h2 class="text-center">Проверки</h2>
-    <form class="text-center" action="/urls/{id}/checks" method="post">
+    <form class="text-center" action="${NamedRoutes.urlPathCheck(page.getUrl().getId())}" method="post">
         <button class="custom-button" type='submit'>Запустить проверку</button>
     </form>
 

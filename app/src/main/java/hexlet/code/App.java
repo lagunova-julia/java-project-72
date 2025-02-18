@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class App {
     public static Javalin getApp() throws Exception {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;LOCK_TIMEOUT=10000;LOCK_MODE=0");
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;LOCK_TIMEOUT=10000;LOCK_MODE=0;DB_CLOSE_DELAY=-1;");
 
         var dataSource = new HikariDataSource(hikariConfig);
 
@@ -41,6 +41,16 @@ public class App {
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
+        app.before(ctx -> {
+            ctx.contentType("text/html; charset=utf-8");
+        });
+
+        app.get(NamedRoutes.rootPath(), RootController::index);
+        app.post(NamedRoutes.urlsPath(), Controller::create);
+        app.get(NamedRoutes.urlsPath(), Controller::index);
+        app.get(NamedRoutes.urlPath("{id}"), Controller::show);
+        app.post(NamedRoutes.urlPathCheck("{id}"), Controller::checkAndSave);
+
         return app;
     }
 
@@ -59,11 +69,5 @@ public class App {
     public static void main(String[] args) throws Exception {
         Javalin app = getApp();
         app.start(getPort());
-
-        app.get(NamedRoutes.rootPath(), RootController::index);
-        app.post(NamedRoutes.urlsPath(), Controller::create);
-        app.get(NamedRoutes.urlsPath(), Controller::index);
-        app.get(NamedRoutes.urlPath("{id}"), Controller::show);
-        app.post(NamedRoutes.urlPathCheck("{id}"), Controller::checkAndSave);
     }
 }

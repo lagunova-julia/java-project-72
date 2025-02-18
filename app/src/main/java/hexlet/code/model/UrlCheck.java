@@ -32,12 +32,4 @@ public class UrlCheck {
         this.description = description;
         this.urlId = urlId;
     }
-
-    public UrlCheck(Long id, int statusCode, String title, String h1, String description) {
-        this.id = id;
-        this.statusCode = statusCode;
-        this.title = title;
-        this.h1 = h1;
-        this.description = description;
-    }
 }
