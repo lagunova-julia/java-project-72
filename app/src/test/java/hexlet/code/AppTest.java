@@ -50,8 +50,12 @@ public final class AppTest {
     }
 
     @BeforeEach
-    void appStart() throws Exception {
-        app = App.getApp();
+    void appStart() {
+        try {
+            app = App.getApp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterEach
