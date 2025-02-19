@@ -61,7 +61,7 @@ public final class AppTest {
     }
 
     @AfterAll
-    static void serverDown() throws IOException {
+    static void serverDown() throws Exception {
         mockServer.shutdown();
     }
 
