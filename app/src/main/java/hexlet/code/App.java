@@ -13,11 +13,13 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 public class App {
-    public static Javalin getApp() throws Exception {
+    public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;LOCK_TIMEOUT=10000;LOCK_MODE=0;DB_CLOSE_DELAY=-1;");
 
@@ -66,7 +68,7 @@ public class App {
         return templateEngine;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException, SQLException {
         Javalin app = getApp();
         app.start(getPort());
     }

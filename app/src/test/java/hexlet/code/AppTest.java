@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,12 +51,8 @@ public final class AppTest {
     }
 
     @BeforeEach
-    void appStart() {
-        try {
-            app = App.getApp();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void appStart() throws SQLException, IOException {
+        app = App.getApp();
     }
 
     @AfterEach
