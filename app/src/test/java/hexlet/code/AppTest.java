@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlRepository;
+import hexlet.code.repository.UrlCheckRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
@@ -100,6 +101,35 @@ public final class AppTest {
             var response = client.post(NamedRoutes.urlsPath(), requestBody);
             assertEquals(200, response.code());
             assertThat(response.body().string()).contains("https://ru.hexlet.io");
+        });
+    }
+
+    @Test
+    public void testCheckUrl() {
+        String url = mockServer.url("/").toString().replaceAll("/$", "");
+
+        JavalinTest.test(app, (server, client) -> {
+            var requestBody = "url=" + url;
+            assertThat(client.post("/urls", requestBody).code()).isEqualTo(200);
+
+            var actualUrl = UrlRepository.findByName(new Url(url)).orElse(null);
+
+            assertThat(actualUrl).isNotNull();
+            assertThat(actualUrl.getName()).isEqualTo(url);
+
+            client.post("/urls/" + actualUrl.getId() + "/checks");
+
+            var response = client.get("/urls/" + actualUrl.getId());
+            assertThat(response.code()).isEqualTo(200);
+            assertThat(response.body().string()).contains(url);
+
+            var actualCheckUrl = UrlCheckRepository.findAllLastChecks().get(actualUrl.getId());
+
+            assertThat(actualCheckUrl).isNotNull();
+            assertThat(actualCheckUrl.getStatusCode()).isEqualTo(200);
+            assertThat(actualCheckUrl.getTitle()).isEqualTo("Test page");
+            assertThat(actualCheckUrl.getH1()).isEqualTo("Do not expect a miracle, miracles yourself!");
+            assertThat(actualCheckUrl.getDescription()).contains("statements of great people");
         });
     }
 }

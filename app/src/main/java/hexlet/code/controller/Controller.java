@@ -14,6 +14,7 @@ import io.javalin.validation.ValidationException;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -88,18 +89,25 @@ public class Controller {
             urlActual = url.get().getName();
         }
 
+        int statusCode = 0;
+        String title = "";
+        String h1 = "";
+        String description = "";
+        try {
+            HttpResponse<JsonNode> jsonResponse = Unirest.get(urlActual).asJson();
+            statusCode = jsonResponse.getStatus();
 
-        HttpResponse<JsonNode> jsonResponse = Unirest.get(urlActual).asJson();
-        int statusCode = jsonResponse.getStatus();
+            HttpResponse<String> response = Unirest.get(urlActual).asString();
+            String body = response.getBody();
+            Document doc = Jsoup.parse(body);
+            title = doc.title();
+            h1 = doc.select("h1").text();
+            description = doc.select("meta[name=description]").attr("content");
+        } catch (UnirestException e) {
+            System.err.println("Произошла ошибка при получении URL: " + e.getMessage());
+        }
 
-        HttpResponse<String> response = Unirest.get(urlActual).asString();
-        String body = response.getBody();
-        Document doc = Jsoup.parse(body);
-        String title = doc.title();
-        String h1 = doc.select("h1").text();
-        String description = doc.select("meta[name=description]").attr("content");
-
-        var urlCheck = new UrlCheck(statusCode, title, h1, description, urlId);
+        var urlCheck = new UrlCheck(urlId, statusCode, title, h1, description);
         UrlCheckRepository.save(urlCheck);
         ctx.sessionAttribute("flash", "Page has verified successfully!");
         ctx.sessionAttribute("flash-type", "success");
