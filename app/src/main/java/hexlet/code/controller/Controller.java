@@ -12,11 +12,11 @@ import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 import io.javalin.validation.ValidationException;
 import kong.unirest.core.HttpResponse;
-import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -82,35 +82,38 @@ public class Controller {
     }
 
     public static void checkAndSave(Context ctx) throws SQLException {
-        var urlId = ctx.pathParamAsClass("id", Long.class).get();
-        Optional<Url> url = UrlRepository.find(urlId);
-        String urlActual = null;
-        if (url.isPresent()) {
-            urlActual = url.get().getName();
-        }
+        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
 
-        int statusCode = 0;
-        String title = "";
-        String h1 = "";
-        String description = "";
+        Url url = UrlRepository.find(id)
+                .orElseThrow(() -> new NotFoundResponse("Url with id = " + id + " not found"));
+
         try {
-            HttpResponse<JsonNode> jsonResponse = Unirest.get(urlActual).asJson();
-            statusCode = jsonResponse.getStatus();
+            HttpResponse<String> response = Unirest.get(url.getName()).asString();
+            Document doc = Jsoup.parse(response.getBody());
 
-            HttpResponse<String> response = Unirest.get(urlActual).asString();
-            String body = response.getBody();
-            Document doc = Jsoup.parse(body);
-            title = doc.title();
-            h1 = doc.select("h1").text();
-            description = doc.select("meta[name=description]").attr("content");
+            int statusCode = response.getStatus();
+            String title = doc.title();
+            Element h1Element = doc.selectFirst("h1");
+            String h1 = h1Element == null ? "" : h1Element.text();
+            Element descriptionElement = doc.selectFirst("meta[name=description]");
+            String description = descriptionElement == null ? "" : descriptionElement.attr("content");
+
+            UrlCheck newUrlCheck = new UrlCheck(statusCode, title, h1, description);
+            newUrlCheck.setUrlId(id);
+            UrlCheckRepository.save(newUrlCheck);
+
+            ctx.sessionAttribute("flash", "Page checked successfully!");
+            ctx.sessionAttribute("flash-type", "success");
+
         } catch (UnirestException e) {
-            System.err.println("Произошла ошибка при получении URL: " + e.getMessage());
+            ctx.sessionAttribute("flash", "Incorrect address");
+            ctx.sessionAttribute("flash-type", "danger");
+        } catch (Exception e) {
+            ctx.sessionAttribute("flash", e.getMessage());
+            ctx.sessionAttribute("flash-type", "danger");
         }
 
-        var urlCheck = new UrlCheck(urlId, statusCode, title, h1, description);
-        UrlCheckRepository.save(urlCheck);
-        ctx.sessionAttribute("flash", "Page has verified successfully!");
-        ctx.sessionAttribute("flash-type", "success");
-        ctx.redirect(NamedRoutes.urlPath(urlId));
-    }
+        ctx.redirect("/urls/" + url.getId());
+    };
+
 }
