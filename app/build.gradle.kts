@@ -25,10 +25,12 @@ dependencies {
     implementation("io.javalin:javalin-rendering:6.1.3")
     implementation("gg.jte:jte:3.1.9")
 
-    implementation(platform("com.konghq:unirest-java-bom:4.3.0"))
-    implementation("com.konghq:unirest-java-core")
-    implementation("com.konghq:unirest-modules-gson")
-    implementation("com.konghq:unirest-modules-jackson")
+//    implementation(platform("com.konghq:unirest-java-bom:4.3.0"))
+//    implementation("com.konghq:unirest-java-core")
+//    implementation("com.konghq:unirest-modules-gson")
+//    implementation("com.konghq:unirest-modules-jackson")
+
+    implementation("com.konghq:unirest-java:3.13.0")
 
     implementation ("org.jsoup:jsoup:1.18.1")
 
