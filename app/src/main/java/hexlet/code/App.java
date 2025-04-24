@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class App {
     public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;LOCK_TIMEOUT=10000;LOCK_MODE=0;DB_CLOSE_DELAY=-1;");
+        hikariConfig.setJdbcUrl(getDatabaseUrl());
 
         var dataSource = new HikariDataSource(hikariConfig);
 
@@ -55,6 +55,12 @@ public class App {
 
         return app;
     }
+
+    private static String getDatabaseUrl() {
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL",
+                "jdbc:h2:mem:project;LOCK_TIMEOUT=10000;LOCK_MODE=0;DB_CLOSE_DELAY=-1;");
+    }
+    //"jdbc:h2:mem:hexlet_project"
 
     public static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7070");
