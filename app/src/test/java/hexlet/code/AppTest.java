@@ -13,6 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,7 +53,7 @@ public final class AppTest {
     }
 
     @BeforeEach
-    void appStart() throws SQLException, IOException {
+    void appStart() throws SQLException, IOException, PSQLException {
         app = App.getApp();
     }
 
