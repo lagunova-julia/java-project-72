@@ -23,6 +23,13 @@ public class App {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDatabaseUrl());
 
+        if (isProduction()) {
+            var username = System.getenv("JDBC_DATABASE_USERNAME");
+            var password = System.getenv("JDBC_DATABASE_PASSWORD");
+            hikariConfig.setUsername(username);
+            hikariConfig.setPassword(password);
+        }
+
         var dataSource = new HikariDataSource(hikariConfig);
 
         // Получаем путь до файла в src/main/resources
@@ -56,11 +63,14 @@ public class App {
         return app;
     }
 
+    public static boolean isProduction() {
+        return System.getenv().getOrDefault("APP_ENV", "development").equals("production");
+    }
+
     private static String getDatabaseUrl() {
         return System.getenv().getOrDefault("JDBC_DATABASE_URL",
                 "jdbc:h2:mem:project;LOCK_TIMEOUT=10000;LOCK_MODE=0;DB_CLOSE_DELAY=-1;");
     }
-    //"jdbc:h2:mem:hexlet_project"
 
     public static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7070");
