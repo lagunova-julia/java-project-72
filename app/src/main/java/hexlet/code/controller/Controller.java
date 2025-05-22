@@ -22,6 +22,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import static io.javalin.rendering.template.TemplateUtil.model;
 import java.net.URI;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Controller {
@@ -62,9 +64,9 @@ public class Controller {
     }
 
     public static void index(Context ctx) throws SQLException {
-        var urls = UrlRepository.getEntities();
-        var lastChecks = UrlCheckRepository.findAllLastChecks();
-        var page = (lastChecks == null) ? new UrlsPage(urls) : new UrlsPage(urls, lastChecks);
+        List<Url> urls = UrlRepository.getEntities();
+        Map<Long, UrlCheck> lastChecks = UrlCheckRepository.findAllLastChecks();
+        UrlsPage page = (lastChecks == null) ? new UrlsPage(urls) : new UrlsPage(urls, lastChecks);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("urls/index.jte", model("page", page));
