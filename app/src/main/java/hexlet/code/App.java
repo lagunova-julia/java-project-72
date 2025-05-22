@@ -25,8 +25,8 @@ import hexlet.code.controller.Controller;
 public final class App {
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "3000");
-        return Integer.valueOf(port);
+        String port = System.getenv().getOrDefault("PORT", "7070");
+        return Integer.parseInt(port);
     }
 
     private static String getDatabaseUrl() {
@@ -34,10 +34,20 @@ public final class App {
                 "jdbc:h2:mem:project;LOCK_TIMEOUT=10000;LOCK_MODE=0;DB_CLOSE_DELAY=-1;");
     }
 
-    public static Javalin getApp() throws IOException, SQLException {
+    public static boolean isProduction() {
+        return System.getenv().getOrDefault("APP_ENV", "development").equals("production");
+    }
 
+    public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDatabaseUrl());
+
+        if (isProduction()) {
+            var username = System.getenv("JDBC_DATABASE_USERNAME");
+            var password = System.getenv("JDBC_DATABASE_PASSWORD");
+            hikariConfig.setUsername(username);
+            hikariConfig.setPassword(password);
+        }
 
         var dataSource = new HikariDataSource(hikariConfig);
         String sql = readResourceFile("schema.sql");
