@@ -1,6 +1,7 @@
 package hexlet.code.repository;
 
 import hexlet.code.model.UrlCheck;
+import org.postgresql.util.PSQLException;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,7 +57,7 @@ public class UrlCheckRepository extends BaseRepository {
         }
     }
 
-    public static Map<Long, UrlCheck> findAllLastChecks() throws SQLException {
+    public static Map<Long, UrlCheck> findAllLastChecks() throws SQLException, PSQLException {
         var sql = "SELECT DISTINCT ON (url_id) * FROM url_checks ORDER BY id DESC";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
