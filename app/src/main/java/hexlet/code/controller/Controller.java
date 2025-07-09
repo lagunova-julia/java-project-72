@@ -18,6 +18,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import static io.javalin.rendering.template.TemplateUtil.model;
@@ -33,32 +35,39 @@ public class Controller {
                     .check(value -> !value.isEmpty(), "URL is empty")
                     .get();
 
-            URI uri = new URI(inputUrl);
-            URL url = uri.toURL();
+            try {
+                URI uri = new URI(inputUrl);
+                URL url = uri.toURL();
 
-            String baseUrl = String.format("%s://%s%s",
-                    url.getProtocol(),
-                    url.getHost(),
-                    (url.getPort() > 0 ? ":" + url.getPort() : ""));
-            Url preparedUrl = new Url(baseUrl);
+                String baseUrl = String.format("%s://%s%s",
+                        url.getProtocol(),
+                        url.getHost(),
+                        (url.getPort() > 0 ? ":" + url.getPort() : ""));
+                Url preparedUrl = new Url(baseUrl);
 
-            Optional<Url> existingUrl = UrlRepository.findByName(preparedUrl);
-            if (existingUrl.isPresent()) {
-                ctx.sessionAttribute("flash", "Page is already exist");
-                ctx.sessionAttribute("flash-type", "error");
+                Optional<Url> existingUrl = UrlRepository.findByName(preparedUrl);
+                if (existingUrl.isPresent()) {
+                    ctx.sessionAttribute("flash", "Page is already exist");
+                    ctx.sessionAttribute("flash-type", "danger");
+                    ctx.redirect(NamedRoutes.urlsPath());
+                    return;
+                }
+
+                UrlRepository.save(preparedUrl);
+                ctx.sessionAttribute("flash", "Page is added successfully!");
+                ctx.sessionAttribute("flash-type", "success");
                 ctx.redirect(NamedRoutes.urlsPath());
-                return;
+            } catch (URISyntaxException | IllegalArgumentException | MalformedURLException e) {
+                var page = new BuildUrlPage(inputUrl, null);
+                page.setFlash("Invalid URL format");
+                page.setFlashType("danger");
+                ctx.render("urls/build.jte", model("page", page)).status(422);
             }
-
-            UrlRepository.save(preparedUrl);
-            ctx.sessionAttribute("flash", "Page is added successfully!");
-            ctx.sessionAttribute("flash-type", "success");
-            ctx.redirect(NamedRoutes.urlsPath());
         } catch (ValidationException e) {
             var inputUrl = ctx.formParam("url");
-            ctx.sessionAttribute("flash", "Incorrect URL");
-            ctx.sessionAttribute("flash-type", "error");
             var page = new BuildUrlPage(inputUrl, e.getErrors());
+            page.setFlash("Incorrect URL");
+            page.setFlashType("danger");
             ctx.render("urls/build.jte", model("page", page)).status(422);
         }
     }
