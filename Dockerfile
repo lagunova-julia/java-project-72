@@ -1,23 +1,26 @@
-FROM eclipse-temurin:20-jdk
-
-ARG GRADLE_VERSION=8.2
-
-RUN apt-get update && apt-get install -yq unzip
-
-RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
-    && unzip gradle-${GRADLE_VERSION}-bin.zip \
-    && rm gradle-${GRADLE_VERSION}-bin.zip
-
-ENV GRADLE_HOME=/opt/gradle
-
-RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
-
-ENV PATH=$PATH:$GRADLE_HOME/bin
+# Используем более легкий образ с JDK 21 (LTS)
+FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /app
 
-COPY /app .
+# Копируем только необходимые для сборки файлы
+COPY gradle ./gradle
+COPY gradlew .
+COPY build.gradle .
+COPY settings.gradle .
+COPY src ./src
 
-RUN gradle installDist
+# Устанавливаем Gradle Wrapper (лучше использовать его, чем глобальную установку Gradle)
+RUN chmod +x gradlew && \
+    ./gradlew --version && \
+    # Чистим кэш apt, чтобы уменьшить размер образа
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-CMD ./build/install/app/bin/app
+# Собираем приложение с очисткой кэша
+RUN ./gradlew installDist --no-daemon --stacktrace \
+    # Очищаем кэш Gradle после сборки
+    && rm -rf /root/.gradle/caches
+
+# Запускаем приложение
+CMD ["./build/install/app/bin/app"]
