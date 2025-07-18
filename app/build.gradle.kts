@@ -4,6 +4,7 @@ plugins {
     id("checkstyle")
     jacoco
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("org.sonarqube") version "6.2.0.5505"
 }
 
 group = "hexlet.code"
@@ -57,6 +58,14 @@ tasks.withType<Test>() {
 tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "lagunova-julia_java-project-72")
+        property("sonar.organization", "lagunova-julia")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
 
