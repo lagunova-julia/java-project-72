@@ -3,9 +3,9 @@ import gg.jte.Content;
 import hexlet.code.dto.BasePage;
 public final class JtepageGenerated {
 	public static final String JTE_NAME = "layout/page.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,18,18,19,20,21,22,23,24,27,28,29,30,31,32,35,36,39,40,41,42,45,46,47,50,68,68,69,69,69,69,70,70,70,72,72,76,76,76,79,79,82,82,82,85,85,88,88,88,2,3,4,4,4,4};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,18,18,19,20,21,22,23,24,27,28,29,30,31,32,35,36,39,40,41,42,45,46,47,50,68,68,69,69,69,69,70,70,70,72,72,76,76,76,79,79,82,82,82,85,85,89,89,89,2,3,4,4,4,4};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, Content content, BasePage page, Content footer) {
-		jteOutput.writeContent("\r\n<!doctype html>\r\n<html lang=\"en\">\r\n    <head>\r\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\r\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\r\n        <title >Анализатор страниц</title>\r\n        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css\"\r\n              rel=\"stylesheet\"\r\n              integrity=\"sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We\"\r\n              crossorigin=\"anonymous\">\r\n        <style>\r\n            body {\r\n                background-color: #ffcccb; ");
+		jteOutput.writeContent("\r\n<!doctype html>\r\n<html lang=\"en\">\r\n    <head>\r\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\r\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\r\n        <title>Page analyzer</title>\r\n        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css\"\r\n              rel=\"stylesheet\"\r\n              integrity=\"sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We\"\r\n              crossorigin=\"anonymous\">\r\n        <style>\r\n            body {\r\n                background-color: #ffcccb; ");
 		jteOutput.writeContent("\r\n");
 		jteOutput.writeContent("\r\n");
 		jteOutput.writeContent("\r\n");
@@ -49,7 +49,7 @@ public final class JtepageGenerated {
 			jteOutput.writeUserContent(footer);
 			jteOutput.writeContent("\r\n                </div>\r\n            </footer>\r\n        ");
 		}
-		jteOutput.writeContent("\r\n\r\n    </body>\r\n</html>");
+		jteOutput.writeContent("\r\n\r\n    </body>\r\n</html>\r\n");
 	}
 	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {
 		Content content = (Content)params.get("content");
