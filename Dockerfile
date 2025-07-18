@@ -1,26 +1,31 @@
-# Используем более легкий образ с JDK 21 (LTS)
+# Используем официальный образ JDK 21
 FROM eclipse-temurin:21-jdk-jammy
 
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем только необходимые для сборки файлы
-COPY gradle ./gradle
+# 1. Копируем только необходимые для сборки файлы
+# Сначала копируем файлы конфигурации Gradle
 COPY gradlew .
+COPY gradle/wrapper/gradle-wrapper.properties gradle/wrapper/
+COPY gradle/wrapper/gradle-wrapper.jar gradle/wrapper/
 COPY build.gradle .
 COPY settings.gradle .
-COPY src ./src
 
-# Устанавливаем Gradle Wrapper (лучше использовать его, чем глобальную установку Gradle)
-RUN chmod +x gradlew && \
-    ./gradlew --version && \
-    # Чистим кэш apt, чтобы уменьшить размер образа
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Затем копируем исходный код
+COPY src src
 
-# Собираем приложение с очисткой кэша
-RUN ./gradlew installDist --no-daemon --stacktrace \
-    # Очищаем кэш Gradle после сборки
-    && rm -rf /root/.gradle/caches
+# 2. Даем права на выполнение gradlew
+RUN chmod +x gradlew
 
-# Запускаем приложение
+# 3. Устанавливаем переменные окружения для Gradle
+ENV GRADLE_USER_HOME=/tmp/.gradle
+RUN mkdir -p $GRADLE_USER_HOME && \
+    chmod -R 777 $GRADLE_USER_HOME
+
+# 4. Собираем приложение с очисткой кэша
+RUN ./gradlew installDist --no-daemon --stacktrace && \
+    rm -rf $GRADLE_USER_HOME/caches
+
+# 5. Запускаем приложение
 CMD ["./build/install/app/bin/app"]
