@@ -18,6 +18,6 @@ WORKDIR /app
 
 COPY /app .
 
-RUN gradle installDist
+RUN gradle installDist --stacktrace
 
 CMD ./build/install/app/bin/app
