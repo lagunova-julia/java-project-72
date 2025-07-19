@@ -66,6 +66,8 @@ sonar {
         property("sonar.projectKey", "lagunova-julia_java-project-72")
         property("sonar.organization", "lagunova-julia")
         property("sonar.host.url", "https://sonarcloud.io")
+
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 
