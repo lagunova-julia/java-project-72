@@ -35,6 +35,8 @@ dependencies {
 
     implementation ("org.jsoup:jsoup:1.18.1")
 
+    implementation("org.bouncycastle:bcprov-jdk18on:1.77")
+
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("io.javalin:javalin-testtools:6.1.3")
