@@ -9,7 +9,6 @@ RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-b
     && rm gradle-${GRADLE_VERSION}-bin.zip
 
 ENV GRADLE_HOME=/opt/gradle
-ENV FIX_VERSION=true
 
 RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
 
