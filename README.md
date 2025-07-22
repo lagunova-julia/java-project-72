@@ -3,7 +3,6 @@
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=lagunova-julia_java-project-72&metric=coverage)](https://sonarcloud.io/summary/new_code?id=lagunova-julia_java-project-72)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lagunova-julia_java-project-72&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lagunova-julia_java-project-72)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lagunova-julia_java-project-72&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=lagunova-julia_java-project-72)
 
 ### Page Analyzer
 #### Приложение:
@@ -16,3 +15,6 @@ https://java-project-72-fsyo.onrender.com/
 - Результаты отображаются в сортируемой таблице
 - Написан на Javalin (Java + JTE-шаблоны)
 
+![img_1.png](img_1.png)
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
