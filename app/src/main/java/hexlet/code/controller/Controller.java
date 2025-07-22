@@ -1,6 +1,5 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.urls.BuildUrlPage;
 import hexlet.code.dto.urls.UrlPage;
 import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
@@ -58,17 +57,14 @@ public class Controller {
                 ctx.sessionAttribute("flash-type", "success");
                 ctx.redirect(NamedRoutes.urlsPath());
             } catch (URISyntaxException | IllegalArgumentException | MalformedURLException e) {
-                var page = new BuildUrlPage(inputUrl, null);
-                page.setFlash("Invalid URL format");
-                page.setFlashType("danger");
-                ctx.render("urls/build.jte", model("page", page)).status(422);
+                ctx.sessionAttribute("flash", "Invalid URL format");
+                ctx.sessionAttribute("flash-type", "danger");
+                ctx.redirect("/");
             }
         } catch (ValidationException e) {
-            var inputUrl = ctx.formParam("url");
-            var page = new BuildUrlPage(inputUrl, e.getErrors());
-            page.setFlash("Incorrect URL");
-            page.setFlashType("danger");
-            ctx.render("urls/build.jte", model("page", page)).status(422);
+            ctx.sessionAttribute("flash", "Incorrect URL: " + e.getErrors().get("url"));
+            ctx.sessionAttribute("flash-type", "danger");
+            ctx.redirect("/");
         }
     }
 

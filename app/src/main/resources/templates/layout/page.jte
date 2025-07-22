@@ -16,16 +16,10 @@
               crossorigin="anonymous">
         <style>
             body {
-                background-color: #ffcccb; /* Нежно-розово-персиковый цвет */
-<%--                background-image: url(https://kartinki.pics/uploads/posts/2021-07/1627130837_8-kartinkin-com-p-nezhno-rozovie-blestki-fon-krasivo-9.jpg);--%>
-<%--                background-size: 100%;--%>
-<%--                background-repeat: no-repeat;--%>
-<%--                background-position: center; /* Центрировать изображение */--%>
-<%--                height: 100vh; /* Устанавливаем высоту body на 100% от высоты окна */--%>
-<%--                margin: 0; /* Убираем отступы */--%>
+                background-color: #f1eae1;
             }
             .custom-button {
-                background-color: #e599b2; /* Розовый цвет */
+                background-color: #a8b252; /* Розовый цвет */
                 color: white; /* Цвет текста */
                 border: none; /* Убираем границу */
                 padding: 10px 20px; /* Добавляем отступы */
@@ -33,22 +27,22 @@
                 font-size: 16px; /* Изменяем размер шрифта */
             }
             .custom-button:hover {
-                background-color: #db7093; /* Цвет при наведении */
-                box-shadow: 0 0 5px #e599b2; /* Тень при фокусировке */
+                background-color: #648b64; /* Цвет при наведении */
+                box-shadow: 0 0 5px #717d1f; /* Тень при фокусировке */
             }
             .custom-input {
-                border: 2px solid #e599b2; /* Цвет рамки */
+                border: 2px solid #a8b252; /* Цвет рамки */
                 border-radius: 5px; /* Закругление углов */
                 padding: 10px; /* Внутренний отступ */
                 transition: border-color 0.3s; /* Плавный переход */
             }
             .custom-input:focus {
-                border-color: #007BFF; /* Цвет рамки при фокусировке */
+                border-color: #648b64; /* Цвет рамки при фокусировке */
                 box-shadow: 0 0 5px #e599b2; /* Тень при фокусировке */
                 outline: none; /* Убирает стандартное выделение */
             }
             .custom-input:hover {
-                border-color: #ff69b4; /* Цвет рамки при наведении */
+                border-color: #648b64; /* Цвет рамки при наведении */
             }
         </style>
     </head>

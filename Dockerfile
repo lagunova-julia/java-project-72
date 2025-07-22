@@ -18,10 +18,6 @@ WORKDIR /app
 
 COPY /app .
 
-RUN ./gradlew dependencies --configuration runtimeClasspath > dependencies.txt
-
-RUN cat dependencies.txt
-
-RUN gradle installDist --stacktrace
+RUN gradle installDist
 
 CMD ./build/install/app/bin/app

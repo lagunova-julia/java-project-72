@@ -4,8 +4,20 @@
 @template.layout.page(
 page = page,
 content = @`
+    @if(page.getErrors() != null)
+        <div class="mb-3">
+            <ul>
+                @for(var validator : page.getErrors().values())
+                    @for(var error : validator)
+                        <li>${error.getMessage()}</li>
+                    @endfor
+                @endfor
+            </ul>
+        </div>
+    @endif
+
     <div class="mx-auto p-4 py-md-5">
-        <form action="/" method="post">
+        <form class="text-center" action="/urls" method="post">
             <div class="mb-3">
                 <label class="form-label">
                     Url
